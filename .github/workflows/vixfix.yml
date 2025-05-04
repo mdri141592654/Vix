@@ -1,0 +1,35 @@
+name: VixFix Scanner
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # jede volle Stunde
+  workflow_dispatch:      # erlaubt manuelles Ausführen
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repo klonen
+        uses: actions/checkout@v3
+
+      - name: Python installieren
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: Abhängigkeiten installieren
+        run: |
+          python -m pip install --upgrade pip
+          pip install yfinance pandas numpy
+
+      - name: Skript ausführen
+        run: python main.py
+
+      - name: JSON-Datei committen
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add vixfix_green.json
+          git commit -m "Update JSON"
+          git push
+        continue-on-error: true

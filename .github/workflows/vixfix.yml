@@ -34,4 +34,4 @@ jobs:
           git pull origin main --rebase
           git add vixfix_green.json
           git commit -m "Update JSON" || echo "Nichts zu committen"
-          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git main
+          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git main

@@ -2,8 +2,8 @@ name: VixFix Scanner
 
 on:
   schedule:
-    - cron: '0 * * * *'  # jede volle Stunde
-  workflow_dispatch:      # erlaubt manuelles Ausführen
+    - cron: '0 * * * *'  # jede Stunde
+  workflow_dispatch:      # manuell starten möglich
 
 jobs:
   run-script:
@@ -25,11 +25,10 @@ jobs:
       - name: Skript ausführen
         run: python main.py
 
-      - name: JSON-Datei committen
+      - name: JSON-Datei committen und pushen
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add vixfix_green.json
-          git commit -m "Update JSON"
-          git push
-        continue-on-error: true
+          git commit -m "Update JSON" || echo "Nichts zu committen"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main

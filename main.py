@@ -28,7 +28,7 @@ def calculate_vix_fix(df, pd_period=22, bbl=20, mult=2.0, lb=50, ph=0.85, pl=1.0
     return df
 
 # Liste der S&P500 und DAX Ticker (Demo)
-sp500_tickers = ["AAPL", "MSFT", "GOOGL", "META", "AMZN", "MCD"]
+sp500_tickers = ["AAPL", "MSFT", "GOOGL", "META", "AMZN"]
 dax_tickers = ["SAP.DE", "SIE.DE", "BAYN.DE", "ALV.DE", "DTE.DE"]
 
 all_tickers = sp500_tickers + dax_tickers
@@ -45,7 +45,3 @@ for ticker in all_tickers:
     except Exception as e:
         print(f"{ticker} Fehler: {e}")
 
-with open("vixfix_green.json", "w") as f:
-    json.dump(results, f)
-
-print("Fertig! Ergebnisse in vixfix_green.json gespeichert.")

@@ -26,7 +26,7 @@ jobs:
       - name: Skript ausführen
         run: python main.py
 
-      - name: Änderungen committen und pushen
+      - name: Änderungen committen und pushen (nur bei Änderungen)
         env:
           REPO_URL: https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git
         run: |
@@ -34,7 +34,12 @@ jobs:
           git config --global user.email "actions@github.com"
           git fetch origin
           git checkout main
-          git pull origin main --rebase
           git add vixfix_green.json
-          git commit -m "Update JSON" || echo "Nichts zu committen"
-          git push "$REPO_URL" main
+
+          # Prüfen, ob es Änderungen gibt
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen an der Datei – kein Commit nötig."
+          else
+            git commit -m "Update JSON"
+            git push "$REPO_URL" main
+          fi

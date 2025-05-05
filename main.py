@@ -6,6 +6,8 @@ import yfinance as yf
 import pandas as pd
 import numpy as np
 import json
+import os
+os.makedirs("static", exist_ok=True)
 
 def calculate_vix_fix(df, pd_period=22, bbl=20, mult=2.0, lb=50, ph=0.85, pl=1.01):
     df = df.copy()

@@ -36,7 +36,7 @@ results = []
 
 for ticker in all_tickers:
     try:
-        data = yf.download(ticker, period="3mo", interval="1d", progress=False)
+        data = yf.download(ticker, period="1y", interval="1h", progress=False)
         if len(data) < 60:
             continue
         df = calculate_vix_fix(data)

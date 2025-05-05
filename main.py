@@ -48,5 +48,5 @@ for ticker in all_tickers:
         print(f"{ticker} Fehler: {e}")
 
 # Ergebnisse als JSON speichern
-with open("static/results.json", "w") as f:
+with open("vixfix_green.json", "w") as f:
     json.dump(results, f)

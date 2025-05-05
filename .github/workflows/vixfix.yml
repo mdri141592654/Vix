@@ -3,11 +3,12 @@ name: VixFix Scanner
 on:
   schedule:
     - cron: '0 * * * *'  # Jede Stunde
-  workflow_dispatch:      # Manuelles Starten möglich
+  workflow_dispatch:
 
 jobs:
   run-script:
     runs-on: ubuntu-latest
+
     steps:
       - name: Repository auschecken
         uses: actions/checkout@v3
@@ -26,6 +27,8 @@ jobs:
         run: python main.py
 
       - name: Änderungen committen und pushen
+        env:
+          REPO_URL: https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
@@ -34,4 +37,4 @@ jobs:
           git pull origin main --rebase
           git add vixfix_green.json
           git commit -m "Update JSON" || echo "Nichts zu committen"
-          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git main
+          git push "$REPO_URL" main

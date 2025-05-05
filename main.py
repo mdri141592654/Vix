@@ -45,3 +45,6 @@ for ticker in all_tickers:
     except Exception as e:
         print(f"{ticker} Fehler: {e}")
 
+# Ergebnisse als JSON speichern
+with open("static/results.json", "w") as f:
+    json.dump(results, f)
